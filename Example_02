@@ -1,0 +1,6 @@
+//Beispiel 02
+x = 2;
+y = 2;
+z = 3;
+cube([x,y,z], center = true);
+//Der Würfel hat jetzt die Parameter x,y,z. Diese können sowohl im Würfel, als auch über Variablen festgelegt werden.Der Parameter "center" giebt an, ob das Objekt zentriert wird(true) oder nicht(false). Wird es nicht zentriert wird es im positiven Vektorraum abgebildet.
