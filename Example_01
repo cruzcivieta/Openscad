@@ -1,0 +1,3 @@
+//Beispiel 01
+cube(5);
+//Würfel wird im positiven Sektor mit den seitenlängen 5,5,5 gebaut.
