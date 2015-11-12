@@ -1,0 +1,47 @@
+module kvt()
+{
+
+module octav()
+{
+module tst1()
+{
+
+color("White")cube([8,1.5,1], center = true);
+translate([-0.1,0,0.5])
+color("White") cube([8.1,1.5,0.1], center = true);
+}
+module tst2()
+{
+tst1();
+for(i=[1:6])
+translate([0,i*1.55,0])
+tst1();
+}
+tst2();
+
+//1
+translate([1.5,0.76,0.75])
+color("Black") cube([5,0.75,0.5],center=  true);
+//2
+translate([1.5,2.31,0.75])
+color("Black") cube([5,0.75,0.5],center = true);
+//3
+translate([1.5,3.82,0.75])
+color("Black") cube([5,0.75,0.5],center = true);
+
+//4
+translate([1.5,7,0.75])
+color("Black") cube([5,0.75,0.5],center = true);
+
+//5
+translate([1.5,8.65,0.75])
+color("Black") cube([5,0.75,0.5],center = true);
+
+}
+for(c = [1:11])
+translate([0,c*10.84,0])
+octav();
+
+}
+translate([0,-70,0])
+kvt();
