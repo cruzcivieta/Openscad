@@ -24,10 +24,7 @@ module bottom_cube() {
 
 module body_bottom()
 {
-    hull() {
-        top_cilinder();
-        bottom_cube();
-    }
+    bottom_cube();
 }
 
 module large_body_top()
