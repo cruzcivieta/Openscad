@@ -1,26 +1,38 @@
-hull()
+module body_bottom()
 {
-hull()
-{
-	translate([2,0,0])
-		cylinder(r = 2,h = 0.1 ,$fn = 100, center = true);
-	translate([-2,0,0])	
-		cylinder(r = 2,$fn = 100,h = 0.1, center = true);
+    translate([0,0,0.3])
+    rotate([90,90,90])
+        cylinder(r = 0.1, h = 4, $fn = 10, center = true);
 
-	translate([1,0,0.75])
-		cylinder(r = 1.5,h = 0.1 ,$fn = 100, center = true);
-	translate([1,0,0.75])	
-		cylinder(r = 1.5,$fn = 100,h = 0.1, center = true);
+    translate([0,0,-0.5])
+        cube([3,1.5,1], center = true);
 }
 
+module body_up()
+{
+    hull()
+    {
+        translate([2,0,0])
+            cylinder(r = 2,h = 0.1 ,$fn = 100, center = true);
+        translate([-2,0,0])	
+            cylinder(r = 2,$fn = 100,h = 0.1, center = true);
 
-translate([0,0,0.3])
-rotate([90,90,90])
-	cylinder(r = 0.1, h = 4, $fn = 10, center = true);
-
-translate([0,0,-0.5])
-	cube([3,1.5,1], center = true);
+        translate([1,0,0.75])
+            cylinder(r = 1.5,h = 0.1 ,$fn = 100, center = true);
+        translate([1,0,0.75])	
+            cylinder(r = 1.5,$fn = 100,h = 0.1, center = true);
+    }
 }
+
+module body() {
+    hull()
+    {
+        body_up();
+        body_bottom();
+    }
+}
+
+body();
 
 module a5a()
 {
