@@ -56,6 +56,7 @@ module body_top()
 }
 
 module body() {
+    
     hull()
     {
         body_top();
@@ -65,55 +66,54 @@ module body() {
 
 body();
 
-module a5a()
+module paw()
 {
-module a2a()
-{
-hull()
-{
-difference()
-{
-translate([0,0,10])
-	cylinder(r = 1,$fn = 100 , h = 0.2, center = true);
-translate([0.1,0.1,10])
-	cylinder(r = 1,$fn = 100 , h = 0.3, center = true);
+    module hoof()
+    {
+        hull()
+        {
+            difference()
+            {
+                translate([0,0,10])
+                    cylinder(r = 1,$fn = 100 , h = 0.2, center = true);
+                translate([0.1,0.1,10])
+                    cylinder(r = 1,$fn = 100 , h = 0.3, center = true);
 
-}
-translate([0.2,-1,9.75])
-	cylinder(r = 0.1,$fn = 100 , h = 1, center = true);
+            }
+                translate([0.2,-1,9.75])
+                    cylinder(r = 0.1,$fn = 100 , h = 1, center = true);
+        }
 
-}
+    }
+    
+    module claw()
+    {
+        difference()
+        {
+            hoof();
+            translate([0.1,0.1,10])
+                cylinder(r = 1,$fn = 100 , h = 4, center = true);
+        }
+    }
 
-}
-module a3a()
-{
-difference()
-{
-a2a();
-translate([0.1,0.1,10])
-	cylinder(r = 1,$fn = 100 , h = 4, center = true);
+    hoof();
+        
+    hull()
+        {
+            translate([0.2,-1,9.75])
+                cylinder(r = 0.1,$fn = 100 , h = 1.4 ,center = true);
 
-}
-}
+            translate([2,-0.5,9.75])
+                cylinder(r = 0.1,$fn = 100 , h = 0.5, center = true);
 
-a2a();
-hull()
-{
-translate([0.2,-1,9.75])
-	cylinder(r = 0.1,$fn = 100 , h = 1.4 ,center = true);
-
-translate([2,-0.5,9.75])
-	cylinder(r = 0.1,$fn = 100 , h = 0.5, center = true);
-
-}
-
+        }
 }
 
 module a6a()
 {
 rotate([180,-90,90])
 translate([-2,3,-11])
-	a5a();
+	paw();
 
 }
 module a7a()
