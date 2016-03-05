@@ -65,7 +65,7 @@ module body()
     }
 }
 
-//body();
+body();
 
 module paw()
 {
@@ -206,14 +206,6 @@ module paws()
 
 paws();
 
-//difference()
-//{
-//translate([0,0,10])
-//	cylinder(r = 4, h = 0.2, $fn = 5, center = true);
-//translate([0,0,10])
-//	cylinder(r = 3.8, h = 0.4, $fn = 5, center = true);
-//
-//}
 
 translate([1,3.25,10])//e1
 	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e1
