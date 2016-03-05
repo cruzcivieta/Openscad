@@ -71,43 +71,93 @@ module paw()
 {
     module hoof()
     {
-        hull()
-        {
+        module half_moon() {
+            
+            module cilynder(offset) {
+                radio = 1;
+                height = 0.2;
+                
+                translate(offset)
+                    cylinder(r = radio, $fn = VERY_FINE_RESOLUTION , h = height, center = true);
+            }
+            
             difference()
             {
-                translate([0,0,10])
-                    cylinder(r = 1,$fn = 100 , h = 0.2, center = true);
-                translate([0.1,0.1,10])
-                    cylinder(r = 1,$fn = 100 , h = 0.3, center = true);
+                part_visible_offset = [0, 0, 10];
+                cilynder(part_visible_offset);
+                
+                hidden_part_offset = [0.1, 0.1, 10];
+                cilynder(hidden_part_offset);
 
             }
-                translate([0.2,-1,9.75])
-                    cylinder(r = 0.1,$fn = 100 , h = 1, center = true);
+        }
+        
+        module broadness() {
+            offset = [0.2, -1, 9.75];
+            radio = 0.1;
+            heigh = 1;
+            
+            translate(offset)
+                cylinder(r = radio, $fn = VERY_FINE_RESOLUTION , h = heigh, center = true);
+        }
+        
+        hull()
+        {
+            half_moon();
+            broadness();
         }
 
     }
     
     module claw()
     {
+        module shape_difference() {
+            offset = [0.1, 0.1, 10];
+            radio = 1;
+            height = 4;
+            
+            translate(offset)
+                cylinder(r = radio,$fn = VERY_FINE_RESOLUTION , h = height, center = true);
+        }
+        
         difference()
         {
             hoof();
-            translate([0.1,0.1,10])
-                cylinder(r = 1,$fn = 100 , h = 4, center = true);
+            shape_difference();
+        }
+    }
+    
+    module thigh()
+    {
+        module top() {
+            offset = [0.2, -1, 9.75];
+            radio = 0.1;
+            height = 1.4;
+            
+            translate(offset)
+                cylinder(r = radio, $fn = VERY_FINE_RESOLUTION, h = height, center = true);
+        }
+        
+        module bottom() {
+            offset = [2, -0.5, 9.75];
+            radio = 0.1;
+            height = 0.5;
+            
+            translate(offset)
+                cylinder(r = radio, $fn = VERY_FINE_RESOLUTION , h = height, center = true);
+        }
+        
+        hull()
+        {
+            top();
+            bottom();
         }
     }
 
+    thigh();
     hoof();
-        
-    hull()
-        {
-            translate([0.2,-1,9.75])
-                cylinder(r = 0.1,$fn = 100 , h = 1.4 ,center = true);
+    
 
-            translate([2,-0.5,9.75])
-                cylinder(r = 0.1,$fn = 100 , h = 0.5, center = true);
-
-        }
 }
 
 module a6a()
