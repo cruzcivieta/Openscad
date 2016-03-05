@@ -3,60 +3,61 @@ FRONT_ROTATE = [90, 90, 90];
 FINE_RESOLUTION = 10;
 VERY_FINE_RESOLUTION = 100;
 
-module top_cilinder()
+module body() 
 {
-    offset = [0, 0, 0.3];
-    radio = 0.1;
-    height = 4;
-    
-    translate(offset)
-        rotate(FRONT_ROTATE)
-            cylinder(r = radio, h = height, $fn = FINE_RESOLUTION, center = true);
-}
-
-module body_bottom() {
-    offset = [0, 0, -0.5];
-    dimension = [3, 1.5, 1];
-    
-    translate(offset)
-        cube(dimension, center = true);
-}
-
-module large_body_top()
-{
-    radio = 2;
-    height = 0.1;
-    
-    first_offset = [2,0,0];
-    translate(first_offset)
-        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
-    
-    second_offset = [-2,0,0];
-    translate(second_offset)	
-        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
-}
-
-module height_body_top()
-{
-    radio = 1.5;
-    height = 0.1;
-    
-    offset = [1, 0, 0.75];
-    translate(offset)
-        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
-}
-
-module body_top()
-{
-    hull()
+    module top_cilinder()
     {
-        large_body_top();
-        height_body_top();
-    }
-}
+        offset = [0, 0, 0.3];
+        radio = 0.1;
+        height = 4;
 
-module body() {
+        translate(offset)
+            rotate(FRONT_ROTATE)
+                cylinder(r = radio, h = height, $fn = FINE_RESOLUTION, center = true);
+    }
     
+    module large_body_top()
+    {
+        radio = 2;
+        height = 0.1;
+        
+        first_offset = [2,0,0];
+        translate(first_offset)
+            cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+        
+        second_offset = [-2,0,0];
+        translate(second_offset)	
+            cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+    }
+
+    module height_body_top()
+    {
+        radio = 1.5;
+        height = 0.1;
+        
+        offset = [1, 0, 0.75];
+        translate(offset)
+            cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+    }
+
+    module body_top()
+    {
+        hull()
+        {
+            large_body_top();
+            height_body_top();
+        }
+    }
+    
+    module body_bottom() 
+    {
+        offset = [0, 0, -0.5];
+        dimension = [3, 1.5, 1];
+        
+        translate(offset)
+            cube(dimension, center = true);
+    }
+        
     hull()
     {
         body_top();
