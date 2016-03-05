@@ -1,7 +1,9 @@
 FRONT_ROTATE = [90, 90, 90];
 
+LOW_RESOLUTION = 5;
 FINE_RESOLUTION = 10;
 VERY_FINE_RESOLUTION = 100;
+ARRAY_BASE_CORRECTION = -1;
 
 module body() 
 {
@@ -64,8 +66,6 @@ module body()
         body_bottom();
     }
 }
-
-body();
 
 module paw()
 {
@@ -204,79 +204,91 @@ module paws()
     right_group_paws();
 }
 
-paws();
-
-
-translate([1,3.25,10])//e1
-	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e1
-
-
-translate([1,-3.25,10])//e2
-	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e2
-
-
-translate([3.5,0,10])//e3
-	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e3
-
-translate([-2.8,-2,10])//e4
-	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e4
-
-translate([-2.8,2,10])//e5
-	cylinder(r = 0.5,h = 0.1, $fn = 5, center = true);//e5
+module petagon_group()
+{
+    OFFSET_Y = 10;
+        
+    module petagon(offset) 
+    {
+        radio = 0.5;
+        height = 0.1;
+        
+        cylinder(r = radio, h = height, $fn = LOW_RESOLUTION, center = true);
+    }
+    
+    dimensions = [
+        [1, 3.25, OFFSET_Y],
+        [1, -3.25, OFFSET_Y],
+        [3.5, 0, OFFSET_Y],
+        [-2.8, -2, OFFSET_Y],
+        [-2.8, 2, OFFSET_Y]
+    ];
+    number_of_pentagons = len(dimensions);
+    
+    for (i = [0:number_of_pentagons + ARRAY_BASE_CORRECTION]) {
+        translate(dimensions[i])
+            petagon(pentagons[i]);
+    }
+}
 
 
 module star()
 {
-//int i = 0.2
+    //int i = 0.2
 
-hull()//e1zue2
-{
-translate([1,3.25,10])//e1
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
+    hull()//e1zue2
+    {
+    translate([1,3.25,10])//e1
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
 
-translate([1,-3.25,10])//e2
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
+    translate([1,-3.25,10])//e2
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
 
-}
-hull()//e2 mit e5
-{
-translate([1,-3.25,10])//e2
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
-translate([-2.8,2,10])//e5
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
+    }
+    hull()//e2 mit e5
+    {
+    translate([1,-3.25,10])//e2
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
+    translate([-2.8,2,10])//e5
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
 
-}
+    }
 
-hull()//e3 mit e4
-{
-translate([3.5,0,10])//e3
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
-translate([-2.8,-2,10])//e4
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
+    hull()//e3 mit e4
+    {
+    translate([3.5,0,10])//e3
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
+    translate([-2.8,-2,10])//e4
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
 
-}
+    }
 
-hull()//e4 mit e1
-{
-translate([-2.8,-2,10])//e4
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
-translate([1,3.25,10])//e1
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
+    hull()//e4 mit e1
+    {
+    translate([-2.8,-2,10])//e4
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
+    translate([1,3.25,10])//e1
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
 
-}
+    }
 
-hull()//e3 mit e5
-{
-translate([3.5,0,10])//e3
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
-translate([-2.8,2,10])//e5
-	cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
+    hull()//e3 mit e5
+    {
+    translate([3.5,0,10])//e3
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
+    translate([-2.8,2,10])//e5
+        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
 
-}
+    }
 
 }
 translate([0,0,-13])
 	star();
+petagon_group();
+paws();
+body();
+
+
 module b1b()
 {
 difference()
