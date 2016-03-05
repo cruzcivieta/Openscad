@@ -1,11 +1,32 @@
+FRONT_ROTATE = [90,90,90];
+
+FINE_RESOLUTION = 10;
+
+module top_cilinder()
+{
+    offset = [0, 0, 0.3];
+    radio = 0.1;
+    height = 4;
+    
+    translate(offset)
+        rotate(FRONT_ROTATE)
+            cylinder(r = radio, h = height, $fn = FINE_RESOLUTION, center = true);
+}
+
+module bottom_cube() {
+    offset = [0, 0, -0.5];
+    dimension = [3, 1.5, 1];
+    
+    translate(offset)
+        cube(dimension, center = true);
+}
+
 module body_bottom()
 {
-    translate([0,0,0.3])
-    rotate([90,90,90])
-        cylinder(r = 0.1, h = 4, $fn = 10, center = true);
-
-    translate([0,0,-0.5])
-        cube([3,1.5,1], center = true);
+    hull() {
+        top_cilinder();
+        bottom_cube();
+    }
 }
 
 module body_up()
