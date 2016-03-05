@@ -163,40 +163,43 @@ module paw()
 
 module paws()
 {
-    module located_paw()
+    SPACER_X = -2;
+    
+    module located_paw(offset_x)
     {
-        rotate([180,-90,90])
-            translate([-2,3,-11])
-                paw();
+        position = [-2, 3, -11];
+        rotation = [180,-90,90];
+        
+        translate([offset_x, 0, 0])
+            rotate(rotation)
+                translate(position)
+                    paw();
 
     }
 
     module left_group_paws()
     {
-        located_paw();
-        
-        translate([-2,0,0])
-        located_paw();
-        
-        translate([-4,0,0])
-        located_paw();
+        offset_x = 0;
+        located_paw(offset_x);
+        located_paw(offset_x + SPACER_X);
+        located_paw(offset_x + SPACER_X * 2);
     }
 
     module right_group_paws()
     {
-        located_paw();
+        offset_x = 0;
+        offset_to_right = [0,2.5,0];
         
-        translate([-2,0,0])
-        located_paw();
-        
-        translate([-4,0,0])
-        located_paw();
+        translate(offset_to_right) {
+            located_paw(offset_x);
+            located_paw(offset_x + SPACER_X);
+            located_paw(offset_x + SPACER_X * 2);
+        }
     }
     
     
     left_group_paws();
-    translate([0,2.5,0])
-        right_group_paws();
+    right_group_paws();
 }
 
 paws();
