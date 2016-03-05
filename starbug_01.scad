@@ -14,17 +14,12 @@ module top_cilinder()
             cylinder(r = radio, h = height, $fn = FINE_RESOLUTION, center = true);
 }
 
-module bottom_cube() {
+module body_bottom() {
     offset = [0, 0, -0.5];
     dimension = [3, 1.5, 1];
     
     translate(offset)
         cube(dimension, center = true);
-}
-
-module body_bottom()
-{
-    bottom_cube();
 }
 
 module large_body_top()
