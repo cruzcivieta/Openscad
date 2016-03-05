@@ -163,7 +163,8 @@ module paw()
 
 module paws()
 {
-    SPACER_X = -2;
+    SPACER_X = 2;
+    OFFSET_X = -4;
     
     module located_paw(offset_x)
     {
@@ -177,26 +178,27 @@ module paws()
 
     }
 
+    module group_paws(offset_x, size) 
+    {
+        offset_x = offset_x - SPACER_X;
+        for (i = [1:size]) {
+            located_paw(offset_x + SPACER_X * i);
+        }
+    }
+
     module left_group_paws()
     {
-        offset_x = 0;
-        located_paw(offset_x);
-        located_paw(offset_x + SPACER_X);
-        located_paw(offset_x + SPACER_X * 2);
+        group_paws(OFFSET_X, 3);
     }
 
     module right_group_paws()
     {
-        offset_x = 0;
-        offset_to_right = [0,2.5,0];
+        offset_to_right = [0, 2.5, 0];
         
         translate(offset_to_right) {
-            located_paw(offset_x);
-            located_paw(offset_x + SPACER_X);
-            located_paw(offset_x + SPACER_X * 2);
+            group_paws(OFFSET_X, 3);
         }
     }
-    
     
     left_group_paws();
     right_group_paws();
