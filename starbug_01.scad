@@ -65,7 +65,7 @@ module body()
     }
 }
 
-body();
+//body();
 
 module paw()
 {
@@ -154,34 +154,52 @@ module paw()
         }
     }
 
-    thigh();
-    hoof();
     
 
-}
-
-module a6a()
-{
-rotate([180,-90,90])
-translate([-2,3,-11])
-	paw();
+    thigh();
+    hoof();   
 
 }
-module a7a()
+
+module paws()
 {
-a6a();
-translate([-2,0,0])
-	a6a();
-translate([-4,0,0])
-	a6a();
+    module located_paw()
+    {
+        rotate([180,-90,90])
+            translate([-2,3,-11])
+                paw();
+
+    }
+
+    module left_group_paws()
+    {
+        located_paw();
+        
+        translate([-2,0,0])
+        located_paw();
+        
+        translate([-4,0,0])
+        located_paw();
+    }
+
+    module right_group_paws()
+    {
+        located_paw();
+        
+        translate([-2,0,0])
+        located_paw();
+        
+        translate([-4,0,0])
+        located_paw();
+    }
+    
+    
+    left_group_paws();
+    translate([0,2.5,0])
+        right_group_paws();
 }
-module bug()
-{
-a7a();
-translate([0,2.5,0])
-	a7a();
-}
-bug();
+
+paws();
 
 //difference()
 //{
