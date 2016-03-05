@@ -1,6 +1,7 @@
-FRONT_ROTATE = [90,90,90];
+FRONT_ROTATE = [90, 90, 90];
 
 FINE_RESOLUTION = 10;
+VERY_FINE_RESOLUTION = 100;
 
 module top_cilinder()
 {
@@ -29,24 +30,43 @@ module body_bottom()
     }
 }
 
-module body_up()
+module large_body_top()
+{
+    radio = 2;
+    height = 0.1;
+    
+    first_offset = [2,0,0];
+    translate(first_offset)
+        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+    
+    second_offset = [-2,0,0];
+    translate(second_offset)	
+        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+}
+
+module height_body_top()
+{
+    radio = 1.5;
+    height = 0.1;
+    
+    offset = [1, 0, 0.75];
+    translate(offset)
+        cylinder(r = radio,h = height ,$fn = VERY_FINE_RESOLUTION, center = true);
+}
+
+module body_top()
 {
     hull()
     {
-        translate([2,0,0])
-            cylinder(r = 2,h = 0.1 ,$fn = 100, center = true);
-        translate([-2,0,0])	
-            cylinder(r = 2,$fn = 100,h = 0.1, center = true);
-
-        translate([1,0,0.75])
-            cylinder(r = 1.5,h = 0.1 ,$fn = 100, center = true);
+        large_body_top();
+        height_body_top();
     }
 }
 
 module body() {
     hull()
     {
-        body_up();
+        body_top();
         body_bottom();
     }
 }
