@@ -19,8 +19,6 @@ module body_up()
 
         translate([1,0,0.75])
             cylinder(r = 1.5,h = 0.1 ,$fn = 100, center = true);
-        translate([1,0,0.75])	
-            cylinder(r = 1.5,$fn = 100,h = 0.1, center = true);
     }
 }
 
