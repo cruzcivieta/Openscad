@@ -227,63 +227,58 @@ module petagon_group()
     
     for (i = [0:number_of_pentagons + ARRAY_BASE_CORRECTION]) {
         translate(dimensions[i])
-            petagon(pentagons[i]);
+            petagon();
     }
 }
 
 
 module star()
 {
-    //int i = 0.2
-
-    hull()//e1zue2
+    OFFSET_X = 0;
+    OFFSET_Y = 0;
+    OFFSET_Z = -13;
+    
+    module point()
     {
-    translate([1,3.25,10])//e1
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
-
-    translate([1,-3.25,10])//e2
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
-
+        RADIO = 0.2;
+        HEIGHT = 0.1;
+        
+        cylinder(r = RADIO,h = HEIGHT, $fn = LOW_RESOLUTION, center = true);
     }
-    hull()//e2 mit e5
+    
+    module edge(initial_offset, end_offset) 
     {
-    translate([1,-3.25,10])//e2
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e2
-    translate([-2.8,2,10])//e5
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
-
+        hull() 
+        {
+            translate(initial_offset)
+                point();
+            
+            translate(end_offset)
+                point();
+        }
     }
+    
+    module unlocated_star() {
+        function next_position_index(position_index) = (position_index + 1) % number_of_points;   
+        
+        points = [
+            [1, 3.25,10], [1, -3.25, 10], [1, -3.25, 10], [-2.8, 2, 10], [3.5, 0, 10], [-2.8, -2, 10]
+        ];
+        number_of_points = len(points);
 
-    hull()//e3 mit e4
-    {
-    translate([3.5,0,10])//e3
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
-    translate([-2.8,-2,10])//e4
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
+        for (position_index = [0: number_of_points + ARRAY_BASE_CORRECTION]) {
+            next_position_index = next_position_index(position_index);
 
+            edge(points[position_index], points[next_position_index]);
+        }        
     }
-
-    hull()//e4 mit e1
-    {
-    translate([-2.8,-2,10])//e4
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e4
-    translate([1,3.25,10])//e1
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e1
-
-    }
-
-    hull()//e3 mit e5
-    {
-    translate([3.5,0,10])//e3
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e3
-    translate([-2.8,2,10])//e5
-        cylinder(r = 0.2,h = 0.1, $fn = 5, center = true);//e5
-
-    }
-
+    
+    translate([OFFSET_X, OFFSET_Y, OFFSET_Z])
+        unlocated_star();
 }
-translate([0,0,-13])
-	star();
+
+
+star();
 petagon_group();
 paws();
 body();
