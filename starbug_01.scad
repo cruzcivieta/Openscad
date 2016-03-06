@@ -81,10 +81,9 @@ module paw()
             
             module cilynder(offset) {
                 radio = 1;
-                height = 0.2;
                 
                 translate(offset)
-                    cylinder(r = radio, $fn = VERY_FINE_RESOLUTION , h = height, center = true);
+                    cylinder(r = radio, $fn = VERY_FINE_RESOLUTION , h = DEFAULT_HEIGHT, center = true);
             }
             
             difference()
@@ -305,11 +304,10 @@ module horn()
         
         difference()
         {
-            minor_height = 0.2;
             translate([WITHOUT_OFFSET, WITHOUT_OFFSET, OFFSET_Z])
-                basic_form(minor_height);
+                basic_form(DEFAULT_HEIGHT);
             
-            mayor_height = minor_height + OFFSET_HEIGHT;
+            mayor_height = DEFAULT_HEIGHT + OFFSET_HEIGHT;
             translate([OFFSET_X_VISIBLE_FORM, WITHOUT_OFFSET, OFFSET_Z])
                 basic_form(mayor_height);
         }
