@@ -3,7 +3,13 @@ FRONT_ROTATE = [90, 90, 90];
 LOW_RESOLUTION = 5;
 FINE_RESOLUTION = 10;
 VERY_FINE_RESOLUTION = 100;
+
 ARRAY_BASE_CORRECTION = -1;
+
+WITHOUT_OFFSET = 0;
+WITHOUT_ROTATE = 0;
+
+DEFAULT_HEIGHT = 0.2;
 
 module body() 
 {
@@ -278,43 +284,70 @@ module star()
 }
 
 
-star();
-petagon_group();
-paws();
-body();
+module horn() 
+{
+    OFFSET_X = 6.29;
+    OFFSET_Z = -4.66;
+    ROTATE_Y = -40;
+    
+    module shape()
+    {        
+        OFFSET_Z = 10;
+        OFFSET_X_VISIBLE_FORM = 0.4;
+        OFFSET_HEIGHT = 0.1;
+        
+        module basic_form(height) {
+            RADIO = 5;
+            
+            cylinder(r = RADIO, h = height, $fn = VERY_FINE_RESOLUTION , center = true);
+        }
+        
+        
+        difference()
+        {
+            minor_height = 0.2;
+            translate([WITHOUT_OFFSET, WITHOUT_OFFSET, OFFSET_Z])
+                basic_form(minor_height);
+            
+            mayor_height = minor_height + OFFSET_HEIGHT;
+            translate([OFFSET_X_VISIBLE_FORM, WITHOUT_OFFSET, OFFSET_Z])
+                basic_form(mayor_height);
+        }
+    }
+    
+    
+
+    translate([OFFSET_X, WITHOUT_OFFSET, OFFSET_Z])
+        rotate([WITHOUT_ROTATE, ROTATE_Y, WITHOUT_ROTATE])
+            shape();
+}
+
+module base() {
+    hull()
+    {
+        MINOR_RADIO = 4;
+        spacer_beteew_cylinder = 0.5;
+        OFFSET_Z = -4;
+        
+        translate([WITHOUT_OFFSET, WITHOUT_OFFSET, OFFSET_Z + spacer_beteew_cylinder])
+            cylinder(r = MINOR_RADIO, h = DEFAULT_HEIGHT, $fn = LOW_RESOLUTION, center = true);
+        
+        MAYOR_RADIO = 5;
+        translate([WITHOUT_OFFSET, WITHOUT_OFFSET, OFFSET_Z])
+            cylinder(r = MAYOR_RADIO, h = DEFAULT_HEIGHT, $fn = LOW_RESOLUTION, center = true);
+    }
+}
+
+module bug() 
+{
+    horn();
+    star();
+    petagon_group();
+    paws();
+    body();
+    base();
+}
+
+bug();
 
 
-module b1b()
-{
-difference()
-{
-	translate([0,0,10])
-		cylinder(r = 5, h = 0.2, $fn = 100 , center = true);
-	translate([0.4,0,10])
-		cylinder(r = 5, h = 0.3, $fn = 100 , center = true);
-}
-}
-module b2b(){
-translate([0,0,-6])
-rotate([0,-75,0])
-	b1b();
-
-}
-module b3b()
-{
-translate([7.5,0,8])
-		b2b();
-}
-module b4b(){
-rotate([0,35,0])
-	b3b();
-}
-translate([-1,0,-2])
-	b4b();
-hull()
-{
-translate([0,0,-3.5	])
-	cylinder(r = 4, h = 0.2, $fn = 5, center = true);
-translate([0,0,-4	])
-	cylinder(r = 5, h = 0.2, $fn = 5, center = true);
-}
